@@ -16,10 +16,8 @@ Set up Repo on your local machine by:
 PROJECT ROOT
 ├─docs: Basic documentation
 ├─src:
-
     └─front-end:
-        ├─app
-        
+        ├─app    
     └─back-end:
         ├─server
 ```
