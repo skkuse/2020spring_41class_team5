@@ -12,10 +12,9 @@ Set up Repo on your local machine by:
 
 ## Repository Structure
 
+```bash
 PROJECT ROOT
-
 ├─docs: Basic documentation
-
 ├─src:
 
     └─front-end:
@@ -23,6 +22,7 @@ PROJECT ROOT
         
     └─back-end:
         ├─server
+```
 
 ## Team members
 
