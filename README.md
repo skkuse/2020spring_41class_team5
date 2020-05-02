@@ -7,3 +7,30 @@ Set up Repo on your local machine by:
 4. git pull origin master
 
 
+## Repository Structure
+
+PROJECT ROOT
+├─docs: Documentation of the project
+└─src: Source code of the project
+    └─front-end:
+        ├─build
+        ├─config
+        ├─node_modules (not included, you can install with some commands)
+        ├─src
+        │  ├─assets
+        │  ├─components
+        │  └─router
+        └─static
+
+    └─back-end:
+        ├─server
+
+
+## Team members
+
+김승윤 : Seungyoon Kim
+김선지 : Sunji Kim
+이민영 : Minyoung Lee
+이민호 : Minho Lee
+임주환: Juhwan Kim
+크리스: Christian Klose
