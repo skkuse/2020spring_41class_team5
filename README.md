@@ -14,21 +14,11 @@ Set up Repo on your local machine by:
 
 PROJECT ROOT
 
-├─docs: Documentation of the project
+docs: Documentation of the project
 └─src: Source code of the project
     └─front-end:
-        ├─build
-        ├─config
-        ├─node_modules (not included, you can install with some commands)
-        ├─src
-        │  ├─assets
-        │  ├─components
-        │  └─router
-        └─static
-
     └─back-end:
         ├─server
-
 
 ## Team members
 
