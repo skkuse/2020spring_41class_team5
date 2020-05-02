@@ -17,6 +17,7 @@ PROJECT ROOT
 docs: Documentation of the project
 └─src: Source code of the project
     └─front-end:
+    
     └─back-end:
         ├─server
 
