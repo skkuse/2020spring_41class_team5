@@ -16,10 +16,8 @@ PROJECT ROOT
 docs: Basic documentation
 
 ├─src:
-
     └─front-end:
         ├─app
-        
     └─back-end:
         ├─server
 
