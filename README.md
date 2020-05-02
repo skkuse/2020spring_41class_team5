@@ -13,12 +13,10 @@ Set up Repo on your local machine by:
 ## Repository Structure
 
 PROJECT ROOT
-
-docs: Documentation of the project
-
-└─src: Source code of the project
-    └─front-end:
-    
+docs: Basic documentation
+└── src
+    └── front-end
+        
     └─back-end:
         ├─server
 
