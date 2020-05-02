@@ -13,6 +13,7 @@ Set up Repo on your local machine by:
 ## Repository Structure
 
 PROJECT ROOT
+
 ├─docs: Basic documentation
 
 ├─src:
