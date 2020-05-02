@@ -32,9 +32,9 @@ PROJECT ROOT
 
 ## Team members
 
-김승윤 : Seungyoon Kim /n
-김선지 : Sunji Kim /n
-이민영 : Minyoung Lee
-이민호 : Minho Lee
-임주환: Juhwan Kim
-크리스: Christian Klose
+- 김승윤 : Seungyoon Kim
+- 김선지 : Sunji Kim
+- 이민영 : Minyoung Lee
+- 이민호 : Minho Lee
+- 임주환: Juhwan Kim
+- 크리스: Christian Klose
