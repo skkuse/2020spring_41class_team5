@@ -13,6 +13,7 @@ Set up Repo on your local machine by:
 ## Repository Structure
 
 PROJECT ROOT
+
 ├─docs: Documentation of the project
 └─src: Source code of the project
     └─front-end:
@@ -31,8 +32,8 @@ PROJECT ROOT
 
 ## Team members
 
-김승윤 : Seungyoon Kim
-김선지 : Sunji Kim
+김승윤 : Seungyoon Kim /n
+김선지 : Sunji Kim /n
 이민영 : Minyoung Lee
 이민호 : Minho Lee
 임주환: Juhwan Kim
