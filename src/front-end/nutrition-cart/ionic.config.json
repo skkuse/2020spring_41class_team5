@@ -1,8 +1,0 @@
-{
-  "name": "Nutrition Cart",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular",
-  "id": "cc6a8783"
-}
