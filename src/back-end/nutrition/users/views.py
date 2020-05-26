@@ -6,16 +6,18 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
+
 from django.contrib.auth import authenticate
+
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
-from users.serializers import RegistrationSerializer, UserPropertiesSerializer, ChangePasswordSerializer
-from users.models import User
+from .serializers import RegistrationSerializer, UserPropertiesSerializer, ChangePasswordSerializer
+from .models import User
 from rest_framework.authtoken.models import Token
-# from rest_framework.authtoken.models import Token
 
 from .managers import UserManager
+from django.contrib.auth import get_user_model
 
 objects = UserManager()
 
@@ -24,6 +26,7 @@ objects = UserManager()
 @permission_classes([])
 @authentication_classes([])
 def registration_view(request):
+    User = get_user_model()
     if request.method == "POST":
         data = {}
         email = request.data.get('email', '0').lower()
@@ -36,11 +39,11 @@ def registration_view(request):
 
         if serializer.is_valid():
             user = serializer.save()
+            user = User.objects.get(email=user.email)
+            token = Token.objects.get(user=user).key
             data["response"] = "successfully registered."
             data["email"] = user.email
-            user = User.objects.get(email=user.email)
-            #token = Token.objects.create(user=user).key
-            #data["token"] = token
+            data["token"] = token
         else:
             data = serializer.errors
         return Response(data)
@@ -93,13 +96,16 @@ class ObtainAuthTokenView(APIView):
 
     authentication_classes = []
     permission_classes = []
+    User = get_user_model()
 
     def post(self, request):
         context = {}
 
-        email = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(email=email, password=password)
+        email = request.POST.get('email').lower()
+        password = request.POST.get('password').lower()
+        user = User.objects.get(email=email, password=password)
+       # user = authenticate(email=email, password=password)  - does not work (return null for unkown reason)
+
         if user:
             try:
                 token = Token.objects.get(user=user)
@@ -112,5 +118,8 @@ class ObtainAuthTokenView(APIView):
         else:
             context['response'] = 'Error'
             context['error_message'] = 'Invalid credentials'
+            context['email'] = email.lower()
+            context['password'] = request.POST.get('password')
+            context['user'] = authenticate(email=email, password=password)
 
         return Response(context)

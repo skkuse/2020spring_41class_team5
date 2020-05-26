@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from users.models import User
+from .models import User
 
 from .managers import UserManager
 
@@ -11,14 +11,26 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["email", "password"]
+        fields = '__all__'
+
+    def create_user(self, email, password, **extra_fields):
+        """
+        Create and save a User with the given email and password.
+        """
+        if not email:
+            raise ValueError(_('The Email must be set'))
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save()
+        return user
 
 
 class UserPropertiesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['pk', 'email', ]
+        fields = '__all__'
 
 
 class ChangePasswordSerializer(serializers.Serializer):
