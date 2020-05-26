@@ -39,8 +39,8 @@ def registration_view(request):
             data["response"] = "successfully registered."
             data["email"] = user.email
             user = User.objects.get(email=user.email)
-            token = Token.objects.create(user=user).key
-            data["token"] = token
+            #token = Token.objects.create(user=user).key
+            #data["token"] = token
         else:
             data = serializer.errors
         return Response(data)
@@ -87,7 +87,7 @@ def does_account_exist_view(request):
 
 
 # LOGIN
-# Response: https://gist.github.com/mitchtabian/8e1bde81b3be342853ddfcc45ec0df8a
+# Response: https://<front-end>/8e1bde81b3be342853ddfcc45ec0df8a
 # URL: http://127.0.0.1:8000/users/login
 class ObtainAuthTokenView(APIView):
 
