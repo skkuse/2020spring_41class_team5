@@ -28,5 +28,5 @@ PROJECT ROOT
 - 김선지 : Sunji Kim
 - 이민영 : Minyoung Lee
 - 이민호 : Minho Lee
-- 김주환: Juhwan Kim
-- 크리스: Christian Klose
+- 김주환 : Juhwan Kim
+- 크리스 : Christian Klose

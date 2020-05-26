@@ -4,11 +4,11 @@ The basic idea of the Nutrition Cart in one chart.
 
 ![](images/NutritionCartProcess.png)
 
-# Propsal
+# Proposal
 
-- File
+- Proposal.ppts
 
-## Requirements
+# Requirements
 
-- Item1
-- Item2
+- Requirements.docx
+
