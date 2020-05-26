@@ -26,7 +26,7 @@ PROJECT ROOT
 
 - 김승윤 : Seungyoon Kim
 - 김선지 : Sunji Kim
-- 이민영 : Minyoung Lee
+- 이민영 : Minyeong Lee
 - 이민호 : Minho Lee
 - 김주환 : Juhwan Kim
 - 크리스 : Christian Klose
