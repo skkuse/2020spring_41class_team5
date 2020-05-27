@@ -18,6 +18,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    address = models.CharField(default="TBD", max_length=100)
+    sex = models.CharField(default="TBD", max_length=100)
+    healthState = models.CharField(default="TBD", max_length=100)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -26,15 +29,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-
-        # For checking permissions. to keep it simple all admin have ALL permissons
-
-    def has_perm(self, perm, obj=None):
-        return self.is_admin
-
-        # Does this user have permission to view this app? (ALWAYS YES FOR SIMPLICITY)
-    def has_module_perms(self, app_label):
-        return True
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
