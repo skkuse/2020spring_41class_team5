@@ -6,6 +6,7 @@ from users.models import User
 
 
 class Delivery(models.Model):
+    delivery_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     deliverydate = models.DateTimeField(default=timezone.now)
     delcreateddate = models.DateTimeField(auto_now_add=True)
