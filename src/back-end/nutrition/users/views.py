@@ -105,7 +105,6 @@ class ObtainAuthTokenView(APIView):
         password = request.POST.get('password').lower()
         user = User.objects.get(email=email, password=password)
        # user = authenticate(email=email, password=password)  - does not work (return null for unkown reason)
-
         if user:
             try:
                 token = Token.objects.get(user=user)
