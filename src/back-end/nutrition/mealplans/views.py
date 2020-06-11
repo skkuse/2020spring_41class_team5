@@ -15,18 +15,21 @@ from mealplans.models import MealPlan
 
 from users.models import User
 from users.managers import UserManager
+from rest_framework.parsers import JSONParser, MultiPartParser
 
 objects = UserManager()
 
 
 class MealPlanViewSet(viewsets.ModelViewSet):
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = []  # TokenAuthentication
+    permission_classes = []  # IsAuthenticated
     serializer_class = MealPlanSerializer
+    parser_classes = (MultiPartParser, JSONParser)
     queryset = MealPlan.objects.all()
 
-# use queryset to get only user specific delivieres
+    # use queryset to get only user specific delivieres
     # def get_queryset(self):
-    #user = self.request.user
-    #my_deliveries = Q(user=user)
-    # return MealPlan.objects.filter(my_deliveries)
+    #   my_id = self.request.query_params.get('id')
+    #   #my_id = int(parent, base=0)
+    #   #print(my_id)
+    #   return MealPlan.objects.filter(id=my_id)

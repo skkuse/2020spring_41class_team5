@@ -49,6 +49,7 @@ def registration_view(request):
         return Response(data)
 
 
+
 def validate_email(email):
     user = None
     try:
@@ -62,7 +63,6 @@ def validate_email(email):
 @api_view(['GET', ])
 @permission_classes((IsAuthenticated, ))
 def account_properties_view(request):
-
     try:
         user = request.user
     except User.DoesNotExist:

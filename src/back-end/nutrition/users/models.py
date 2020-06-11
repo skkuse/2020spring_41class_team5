@@ -19,7 +19,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
     address = models.CharField(default="TBD", max_length=100)
-    sex = models.CharField(default="TBD", max_length=100)
+    gender = models.CharField(default="TBD", max_length=100)
     healthState = models.CharField(default="TBD", max_length=100)
 
     USERNAME_FIELD = 'email'

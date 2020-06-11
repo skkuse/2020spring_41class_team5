@@ -18,13 +18,14 @@ objects = UserManager()
 
 
 class DeliveryViewSet(viewsets.ModelViewSet):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = []  # TokenAuthentication
+    permission_classes = []  # IsAuthenticated
     serializer_class = DeliverySerializer
-    #queryset = Delivery.objects.all()
+    queryset = Delivery.objects.all()
 
 # use queryset to get only user specific delivieres
-    def get_queryset(self):
-        user = self.request.user
-        my_deliveries = Q(user=user)
-        return Delivery.objects.filter(my_deliveries)
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     my_deliveries = Q(user=user)
+    #     return Delivery.objects.filter(my_deliveries)
+

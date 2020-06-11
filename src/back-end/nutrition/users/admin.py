@@ -12,7 +12,7 @@ class UserAdmin(UserAdmin):
     form = UserChangeForm
     model = User
     list_display = ('email', 'is_staff', 'is_active',
-                    'address', 'sex', 'healthState')
+                    'address', 'gender', 'healthState')
     list_filter = ('email', 'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),

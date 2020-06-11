@@ -5,6 +5,9 @@ from mealplans.views import MealPlanViewSet
 router = DefaultRouter()
 router.register("", MealPlanViewSet, basename="mealplans")
 
+# router.register(r"/mealplans/(?P < parent_id > .+)", MealPlanViewSet)
+# router.register(r'/(?P<id>.+)', MealPlanViewSet)
+
 app_name = "mealplans"
 
 urlpatterns = [

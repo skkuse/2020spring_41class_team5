@@ -1,17 +1,24 @@
 from django.db import models
 
 
-from django.db import models
 from django.utils import timezone
+from django.core.files.storage import FileSystemStorage
 # from users.models import User
+from deliveries.models import Delivery
+
+
+def upload_path(instance, filename):
+    return '/'.join(['images', filename])
 
 
 class ShoppingList(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(default="None", max_length=100)
-    img = models.CharField(max_length=500)
-    price = models.DecimalField(decimal_places=5, max_digits=10)
-    img2 = models.ImageField()
+    price = models.DecimalField(decimal_places=2, max_digits=10)
+    img = models.ImageField(blank=True, null=True, upload_to=upload_path)
+    state =  models.BooleanField(default=False)
+    delivery_id = models.ForeignKey(Delivery, on_delete=models.CASCADE, default=1)
+
 
     # img = models.Image
     # delcreateddate = models.DateTimeField(auto_now_add=True)
