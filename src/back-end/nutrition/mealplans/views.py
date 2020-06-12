@@ -18,11 +18,20 @@ from users.managers import UserManager
 
 objects = UserManager()
 
+class CreateListMixn:
+    """Allows bulk creation of a resource"""
+
+    def get_serializer(self, *args, **kwargs):
+        if isinstance(kwargs.get('data', {}), list):
+            kwargs['many']=True
+
+        return super().get_serializer(*args, **kwargs)
 
 class MealPlanViewSet(viewsets.ModelViewSet):
     authentication_classes = []
     permission_classes = []
     serializer_class = MealPlanSerializer
+    model = MealPlan
     queryset = MealPlan.objects.all()
 
 # use queryset to get only user specific delivieres
