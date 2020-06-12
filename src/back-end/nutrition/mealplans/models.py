@@ -7,7 +7,7 @@ class MealPlan(models.Model):
     idMeal = models.AutoField(primary_key=True)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
     strMeal = models.CharField(default="None", max_length=100)
-    strInstructions = models.CharField(default="None", max_length=2000)
+    strInstructions = models.CharField(default="None", max_length=3000)
     strMealThumb = models.CharField(default="None", max_length=100)
     strIngredient1 = models.CharField(default="None", max_length=100)
     strIngredient2 = models.CharField(default="None", max_length=100)
