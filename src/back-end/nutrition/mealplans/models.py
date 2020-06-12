@@ -4,6 +4,7 @@ from django.utils import timezone
 
 
 class MealPlan(models.Model):
+<<<<<<< HEAD
     idMeal = models.AutoField(primary_key=True)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
     strMeal = models.CharField(default="None", max_length=100)
@@ -49,6 +50,17 @@ class MealPlan(models.Model):
     strMeasure18 = models.IntegerField(default = 0)
     strMeasure19 = models.IntegerField(default = 0)
     strMeasure20  = models.IntegerField(default = 0)
+=======
+    id = models.AutoField(primary_key=True)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mealName = models.CharField(default="None", max_length=100)
+    kcal = models.IntegerField(default=0, max_length=10)
+    carbonhydrate = models.IntegerField(default=0, max_length=10)
+    protein = models.IntegerField(default=0, max_length=10)
+    fat = models.IntegerField(default=0, max_length=10)
+    sodium = models.IntegerField(default=0, max_length=10)
+    vitaminc = models.IntegerField(default=0, max_length=10)
+>>>>>>> Chris
     # delcreateddate = models.DateTimeField(auto_now_add=True)
     #mealType = models.CharField(default="None", max_length=100)
     # User = To whom belongs this delivery (=> cross reference to items)
