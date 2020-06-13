@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class MealPlan(models.Model):
 
-    idMeal = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
     strMeal = models.CharField(default="None", max_length=100)
     strInstructions = models.CharField(default="None", max_length=3000)
