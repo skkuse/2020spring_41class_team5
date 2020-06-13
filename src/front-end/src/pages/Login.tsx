@@ -89,6 +89,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
           <IonTitle>Login</IonTitle>
         </IonToolbar>
       </IonHeader>
+      <img src="/images/logo.png"/>
       <IonContent>
         <IonLoading message="Loading ..." duration={10} isOpen={loading} />
         <IonHeader collapse="condense">

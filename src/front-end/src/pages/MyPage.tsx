@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import  { useForm, Controller } from 'react-hook-form';
 import "./MyPage.css";
+import { registerUserinfo } from "../data/api";
 import {
   IonContent,
   IonHeader,
@@ -40,9 +41,7 @@ export interface info {
 }
 
 let defaultInfo = {
-  email: "",
-  password: "",
-  name: "",
+  name: "hi@naver.com",
   gender: "",
   address: "",
   age: "",
@@ -60,16 +59,28 @@ let defaultInfo = {
   kiwi: false
 };
 
+const Querystring = require('querystring');
+
 const MyPage :React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [info, setInfo] = useState<info>();
+  const [email, setEmail] = useState<info["name"]>();
   const [checked, setChecked] = useState();
 
-  const getUserInfo = (data: any) => {
+  useEffect(() => {
     setLoading(true);
-    //axios.get('http://127.0.0.1:8000/users/', {info})
-  }
+    /*
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:8000/users/userinfo",
+    }).then((res) => {
+      alert(JSON.stringify(res.data, null, 2));
+      setInfo(res.data);
+      setLoading(false);
+    }) [info];*/
+    //setInfo(defaultInfo);
+  });
 
   const { control, register, handleSubmit, formState, watch, errors } = useForm({
     defaultValues: defaultInfo,
@@ -78,13 +89,8 @@ const MyPage :React.FC = () => {
 
   const onModify = (data: any) => {
     alert(JSON.stringify(data, null, 2));
-    setData(data)
-    /*axios.post('http://localhost:8000/users/:userId', data)
-    .then((res) => {
-      console.log(res.data)
-    }).catch((error) => {
-      console.log(error)
-    })*/
+    setData(data);
+    const res = registerUserinfo(data);
   }
 /*  
   useEffect(() => {
@@ -119,7 +125,7 @@ const MyPage :React.FC = () => {
                 return selected.detail.value
               }}
               name="name"
-              placeholder="Example> John Smith"
+              placeholder={defaultInfo.name}
               ref = {register}
               rules={{
                 required: true
