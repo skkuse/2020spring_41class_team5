@@ -47,7 +47,7 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
     if (!res) {
       toast("Error while trying to login.");
     } else {
-      toast("Register success");
+      toast("Survey Required");
       history.replace("/login");
     }
     setLoading(false);

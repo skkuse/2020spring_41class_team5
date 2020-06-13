@@ -7,6 +7,17 @@ from .forms import UserCreationForm, UserChangeForm
 from .models import User
 
 
+# class UserInfoAdmin(UserAdmin):
+#     add_form = UserCreationForm
+#     form = UserChangeForm
+#     model = UserInfo
+#     list_display = ('email', 'name', 'gender',
+#                     'address', 'age', 'height', 
+#                     'weight')          
+
+# admin.site.register(UserInfo, UserInfoAdmin)
+
+
 class UserAdmin(UserAdmin):
     add_form = UserCreationForm
     form = UserChangeForm

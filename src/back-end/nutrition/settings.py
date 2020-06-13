@@ -64,6 +64,8 @@ INSTALLED_APPS = [
     'deliveries',
     'shoppings',
     'mealplans',
+    #'userinfo',
+    'userinfo.apps.UserinfoConfig',
 ]
 
 

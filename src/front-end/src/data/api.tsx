@@ -108,8 +108,9 @@ export const registerUser = async (email: string, password:string) => {
 // }
 
 export const registerUserinfo = async (data: any) => {
+  alert(JSON.stringify(data, null, 2));
   try {
-    const res = await axios.post("http://127.0.0.1:8000/users/userinfo/", Querystring.stringify(data))
+    const res = await axios.post("http://127.0.0.1:8000/userinfo/", data)
     console.log(res)
     return true
   }

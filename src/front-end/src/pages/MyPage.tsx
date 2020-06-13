@@ -20,6 +20,8 @@ import {
   IonRow,
   IonCol,
   } from '@ionic/react';
+import { RouteComponentProps } from 'react-router-dom';
+import { toast } from '../toast';
 
 export interface info {
   name: string;
@@ -61,7 +63,7 @@ let defaultInfo = {
 
 const Querystring = require('querystring');
 
-const MyPage :React.FC = () => {
+const MyPage :React.FC<RouteComponentProps> = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [info, setInfo] = useState<info>();
@@ -89,21 +91,30 @@ const MyPage :React.FC = () => {
 
   const onModify = (data: any) => {
     alert(JSON.stringify(data, null, 2));
-    setData(data);
+    //setData(data);
     const res = registerUserinfo(data);
+    if (!res) {
+      toast("Error while trying to login.");
+    } else {
+      toast("Register success");
+      history.replace("/login");
+    }
+    setLoading(false);
   }
-/*  
+
   useEffect(() => {
     setLoading(true);
+    setEmail("hihi@naver.com");
+    /*
     axios({
       method:"GET",
       url: "http://localhost:8000/users/:userId"
     }).then((res) => {
       setInfo(res.data);
       setLoading(false);
-    });
+    });*/
   }, [setInfo]);
-*/
+
     return (
       <IonPage>
       <IonHeader>
@@ -122,11 +133,36 @@ const MyPage :React.FC = () => {
               onChangeName="onIonChange"
               onChange={([selected]) => {
                 console.log("Name", selected.detail.value);
+                setEmail(selected.detail.value)
                 return selected.detail.value
               }}
               name="name"
-              placeholder={defaultInfo.name}
+              placeholder={email}
               ref = {register}
+              rules={{
+                required: true
+              }}
+            />
+          </IonItem>
+
+          <IonItem>
+            <IonLabel position="stacked">Gender</IonLabel>
+            <Controller
+              as={
+                <IonSelect>
+                  <IonSelectOption value="male">Male</IonSelectOption>
+                  <IonSelectOption value="female">Female</IonSelectOption>
+                </IonSelect>
+              }
+              control={control}
+              onChangeName="onIonChange"
+              onChange={([selected]) => {
+                console.log("Gender", selected.detail.value);
+                return selected.detail.value
+              }}
+              name="gender"
+              ref = {register}
+              placeholder="Select"
               rules={{
                 required: true
               }}
@@ -203,30 +239,6 @@ const MyPage :React.FC = () => {
               name="weight"
               ref = {register}
               placeholder="Example> 80"
-              rules={{
-                required: true
-              }}
-            />
-          </IonItem>
-
-          <IonItem>
-            <IonLabel position="stacked">Gender</IonLabel>
-            <Controller
-              as={
-                <IonSelect>
-                  <IonSelectOption value="male">Male</IonSelectOption>
-                  <IonSelectOption value="female">Female</IonSelectOption>
-                </IonSelect>
-              }
-              control={control}
-              onChangeName="onIonChange"
-              onChange={([selected]) => {
-                console.log("Gender", selected.detail.value);
-                return selected.detail.value
-              }}
-              name="gender"
-              ref = {register}
-              placeholder="Select"
               rules={{
                 required: true
               }}

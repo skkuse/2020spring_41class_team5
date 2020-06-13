@@ -13,6 +13,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(default=False)
@@ -21,7 +22,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(default="TBD", max_length=100)
     gender = models.CharField(default="TBD", max_length=100)
     healthState = models.CharField(default="TBD", max_length=100)
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -35,3 +35,4 @@ class User(AbstractBaseUser, PermissionsMixin):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
