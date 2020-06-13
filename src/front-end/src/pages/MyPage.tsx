@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import  { useForm, Controller } from 'react-hook-form';
 import "./MyPage.css";
+import { registerUserinfo } from "../data/api";
 import {
   IonContent,
   IonHeader,
@@ -19,6 +20,7 @@ import {
   IonRow,
   IonCol,
   } from '@ionic/react';
+import { RouteComponentProps } from 'react-router-dom';
 
 export interface info {
   name: string;
@@ -40,9 +42,7 @@ export interface info {
 }
 
 let defaultInfo = {
-  email: "",
-  password: "",
-  name: "",
+  name: "hi@naver.com",
   gender: "",
   address: "",
   age: "",
@@ -60,16 +60,28 @@ let defaultInfo = {
   kiwi: false
 };
 
-const MyPage :React.FC = () => {
+const Querystring = require('querystring');
+
+const MyPage :React.FC<RouteComponentProps> = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [info, setInfo] = useState<info>();
+  const [email, setEmail] = useState<info["name"]>();
   const [checked, setChecked] = useState();
 
-  const getUserInfo = (data: any) => {
+  useEffect(() => {
     setLoading(true);
-    //axios.get('http://127.0.0.1:8000/users/', {info})
-  }
+    /*
+    axios({
+      method: "GET",
+      url: "http://127.0.0.1:8000/users/userinfo",
+    }).then((res) => {
+      alert(JSON.stringify(res.data, null, 2));
+      setInfo(res.data);
+      setLoading(false);
+    }) [info];*/
+    //setInfo(defaultInfo);
+  });
 
   const { control, register, handleSubmit, formState, watch, errors } = useForm({
     defaultValues: defaultInfo,
@@ -78,26 +90,24 @@ const MyPage :React.FC = () => {
 
   const onModify = (data: any) => {
     alert(JSON.stringify(data, null, 2));
-    setData(data)
-    /*axios.post('http://localhost:8000/users/:userId', data)
-    .then((res) => {
-      console.log(res.data)
-    }).catch((error) => {
-      console.log(error)
-    })*/
+    setData(data);
+    const res = registerUserinfo(data);
+    history.replace("/login");
   }
-/*  
+
   useEffect(() => {
     setLoading(true);
+    setEmail("hihi@naver.com");
+    /*
     axios({
       method:"GET",
       url: "http://localhost:8000/users/:userId"
     }).then((res) => {
       setInfo(res.data);
       setLoading(false);
-    });
+    });*/
   }, [setInfo]);
-*/
+
     return (
       <IonPage>
       <IonHeader>
@@ -116,11 +126,60 @@ const MyPage :React.FC = () => {
               onChangeName="onIonChange"
               onChange={([selected]) => {
                 console.log("Name", selected.detail.value);
+                setEmail(selected.detail.value)
                 return selected.detail.value
               }}
               name="name"
-              placeholder="Example> John Smith"
+              placeholder={email}
               ref = {register}
+              rules={{
+                required: true
+              }}
+            />
+          </IonItem>
+
+          <IonItem>
+            <IonLabel position="stacked">Gender</IonLabel>
+            <Controller
+              as={
+                <IonSelect>
+                  <IonSelectOption value="male">Male</IonSelectOption>
+                  <IonSelectOption value="female">Female</IonSelectOption>
+                </IonSelect>
+              }
+              control={control}
+              onChangeName="onIonChange"
+              onChange={([selected]) => {
+                console.log("Gender", selected.detail.value);
+                return selected.detail.value
+              }}
+              name="gender"
+              ref = {register}
+              placeholder="Select"
+              rules={{
+                required: true
+              }}
+            />
+          </IonItem>
+
+          <IonItem>
+            <IonLabel position="stacked">Gender</IonLabel>
+            <Controller
+              as={
+                <IonSelect>
+                  <IonSelectOption value="male">Male</IonSelectOption>
+                  <IonSelectOption value="female">Female</IonSelectOption>
+                </IonSelect>
+              }
+              control={control}
+              onChangeName="onIonChange"
+              onChange={([selected]) => {
+                console.log("Gender", selected.detail.value);
+                return selected.detail.value
+              }}
+              name="gender"
+              ref = {register}
+              placeholder="Select"
               rules={{
                 required: true
               }}
@@ -197,30 +256,6 @@ const MyPage :React.FC = () => {
               name="weight"
               ref = {register}
               placeholder="Example> 80"
-              rules={{
-                required: true
-              }}
-            />
-          </IonItem>
-
-          <IonItem>
-            <IonLabel position="stacked">Gender</IonLabel>
-            <Controller
-              as={
-                <IonSelect>
-                  <IonSelectOption value="male">Male</IonSelectOption>
-                  <IonSelectOption value="female">Female</IonSelectOption>
-                </IonSelect>
-              }
-              control={control}
-              onChangeName="onIonChange"
-              onChange={([selected]) => {
-                console.log("Gender", selected.detail.value);
-                return selected.detail.value
-              }}
-              name="gender"
-              ref = {register}
-              placeholder="Select"
               rules={{
                 required: true
               }}
