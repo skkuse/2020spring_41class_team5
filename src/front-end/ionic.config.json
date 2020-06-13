@@ -1,7 +1,0 @@
-{
-  "name": "nutrition-cart",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
