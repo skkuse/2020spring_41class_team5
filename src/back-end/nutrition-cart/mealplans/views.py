@@ -21,14 +21,14 @@ from rest_framework.parsers import JSONParser, MultiPartParser
 objects = UserManager()
 
 
-# class CreateListMixin:
+class CreateListMixin:
 #     """Allows bulk creation of a resource."""
 
-#     def get_serializer(self, *args, **kwargs):
-#         if isinstance(kwargs.get('data', {}), list):
-#             kwargs['many'] = True
+    def get_serializer(self, *args, **kwargs):
+        if isinstance(kwargs.get('data', {}), list):
+            kwargs['many'] = True
 
-#         return super().get_serializer(*args, **kwargs)
+        return super().get_serializer(*args, **kwargs)
 
 
 class MealPlanViewSet(viewsets.ModelViewSet):
