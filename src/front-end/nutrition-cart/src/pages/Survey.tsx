@@ -54,10 +54,9 @@ const Survey :React.FC = () => {
   const Querystring = require('querystring')
 
   const onSubmit = (data: any) => {
-    alert(JSON.stringify(data, null, 2));
     setLoading(true);
     setData(data);
-    axios.put('http://127.0.0.1:8000/user', Querystring.stringify(data))
+    axios.post('http://127.0.0.1:8000/userinfo', data)
     .then((res) => {
       console.log(res.data)
       setLoading(false);

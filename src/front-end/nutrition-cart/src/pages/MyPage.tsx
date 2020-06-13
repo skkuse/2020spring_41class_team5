@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import  { useForm, Controller } from 'react-hook-form';
 import "./MyPage.css";
-import { registerUserinfo } from "../data/api";
+import { registerUserinfo, modifyUserinfo } from "../data/api";
 import {
   IonContent,
   IonHeader,
@@ -43,7 +43,7 @@ export interface info {
 }
 
 let defaultInfo = {
-  name: "hi@naver.com",
+  name: "",
   gender: "",
   address: "",
   age: "",
@@ -67,22 +67,7 @@ const MyPage :React.FC<RouteComponentProps> = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [info, setInfo] = useState<info>();
-  const [email, setEmail] = useState<info["name"]>();
   const [checked, setChecked] = useState();
-
-  useEffect(() => {
-    setLoading(true);
-    /*
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:8000/users/userinfo",
-    }).then((res) => {
-      alert(JSON.stringify(res.data, null, 2));
-      setInfo(res.data);
-      setLoading(false);
-    }) [info];*/
-    //setInfo(defaultInfo);
-  });
 
   const { control, register, handleSubmit, formState, watch, errors } = useForm({
     defaultValues: defaultInfo,
@@ -90,29 +75,26 @@ const MyPage :React.FC<RouteComponentProps> = ({ history }) => {
   });
 
   const onModify = (data: any) => {
-    alert(JSON.stringify(data, null, 2));
-    //setData(data);
-    const res = registerUserinfo(data);
+    const res = modifyUserinfo(data);
     if (!res) {
       toast("Error while trying to login.");
     } else {
-      toast("Register success");
-      history.replace("/login");
+      toast("Modification success");
+      history.replace("/meals");
     }
     setLoading(false);
   }
 
   useEffect(() => {
     setLoading(true);
-    setEmail("hihi@naver.com");
-    /*
     axios({
       method:"GET",
-      url: "http://localhost:8000/users/:userId"
+      url: "http://localhost:8000/users/userinfo"
     }).then((res) => {
       setInfo(res.data);
+      alert(JSON.stringify(res.data, null, 2))
       setLoading(false);
-    });*/
+    })
   }, [setInfo]);
 
     return (
@@ -133,11 +115,10 @@ const MyPage :React.FC<RouteComponentProps> = ({ history }) => {
               onChangeName="onIonChange"
               onChange={([selected]) => {
                 console.log("Name", selected.detail.value);
-                setEmail(selected.detail.value)
                 return selected.detail.value
               }}
               name="name"
-              placeholder={email}
+              placeholder={"Example> abc@abc.com"}
               ref = {register}
               rules={{
                 required: true
@@ -421,11 +402,12 @@ const MyPage :React.FC<RouteComponentProps> = ({ history }) => {
           </IonItem>
           
           <IonRow>
-            <IonCol></IonCol>
             <IonCol>
               <IonButton type="submit">modify</IonButton>
             </IonCol>
-            <IonCol></IonCol>
+            <IonCol>
+              <IonButton routerLink="/settings">go back</IonButton>
+            </IonCol>
           </IonRow>
         </IonList>
         </form>

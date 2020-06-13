@@ -120,6 +120,19 @@ export const registerUserinfo = async (data: any) => {
   }
 }
 
+export const modifyUserinfo = async (data: any) => {
+  alert(JSON.stringify(data, null, 2));
+  try {
+    const res = await axios.put("http://127.0.0.1:8000/userinfo/", data)
+    console.log(res)
+    return true
+  }
+  catch (error) {
+    console.log(error)
+    return false
+  }
+}
+
 export default axios.create({
   baseURL: `http://127.0.0.1:8000/`,
   // headers: { 'Authentication': 'Token ' }
