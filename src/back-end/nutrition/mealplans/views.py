@@ -17,15 +17,33 @@ from users.models import User
 from users.managers import UserManager
 from rest_framework.parsers import JSONParser, MultiPartParser
 
+
 objects = UserManager()
+
+
+# class CreateListMixin:
+#     """Allows bulk creation of a resource."""
+
+#     def get_serializer(self, *args, **kwargs):
+#         if isinstance(kwargs.get('data', {}), list):
+#             kwargs['many'] = True
+
+#         return super().get_serializer(*args, **kwargs)
 
 
 class MealPlanViewSet(viewsets.ModelViewSet):
     authentication_classes = []  # TokenAuthentication
     permission_classes = []  # IsAuthenticated
-    serializer_class = MealPlanSerializer
-    parser_classes = (MultiPartParser, JSONParser)
+    #parser_classes = (MultiPartParser, JSONParser)
     queryset = MealPlan.objects.all()
+    model = MealPlan
+    serializer_class = MealPlanSerializer  # MealPlanSerializer
+
+    def get_serializer(self, *args, **kwargs):
+            if self.request.method.lower() == 'post':
+                data = kwargs.get('data')
+                kwargs['many'] = isinstance(data, list)
+            return super(MealPlanViewSet, self).get_serializer(*args, **kwargs)
 
     # use queryset to get only user specific delivieres
     # def get_queryset(self):

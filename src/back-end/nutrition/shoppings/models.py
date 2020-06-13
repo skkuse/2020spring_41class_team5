@@ -17,7 +17,8 @@ class ShoppingList(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=10)
     img = models.ImageField(blank=True, null=True, upload_to=upload_path)
     state =  models.BooleanField(default=False)
-    delivery_id = models.ForeignKey(Delivery, on_delete=models.CASCADE, default=1)
+    # default=1
+    delivery = models.ForeignKey(Delivery, related_name='shoppingList', on_delete=models.CASCADE)
 
 
     # img = models.Image
