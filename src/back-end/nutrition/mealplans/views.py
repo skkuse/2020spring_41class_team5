@@ -16,7 +16,9 @@ from mealplans.models import MealPlan
 from users.models import User
 from users.managers import UserManager
 from rest_framework.parsers import JSONParser, MultiPartParser
-
+from django.shortcuts import redirect, render
+from rest_framework.decorators import authentication_classes, api_view, permission_classes
+import logging
 
 objects = UserManager()
 
@@ -39,11 +41,30 @@ class MealPlanViewSet(viewsets.ModelViewSet):
     model = MealPlan
     serializer_class = MealPlanSerializer  # MealPlanSerializer
 
-    def get_serializer(self, *args, **kwargs):
-            if self.request.method.lower() == 'post':
-                data = kwargs.get('data')
-                kwargs['many'] = isinstance(data, list)
-            return super(MealPlanViewSet, self).get_serializer(*args, **kwargs)
+logger = logging.getLogger(__name__)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+def change_mealplean(request, pk, instruction):
+      meal = MealPlan.objects.get(id=pk)
+      user = request.user
+      logger.error(user)
+      #Quser = Q(user=user)
+      if instruction == 'subscribe':
+        meal.users.add(user)
+        #meal.subscribe(user)
+      if instruction == 'unsubscribe':
+         meal.users.remove(user)
+        #MealPlan.unsubscribe(self.request.user, mealplan)
+      return redirect("/mealplans")
+
+
+    # def get_serializer(self, *args, **kwargs):
+    #         if self.request.method.lower() == 'post':
+    #             data = kwargs.get('data')
+    #             kwargs['many'] = isinstance(data, list)
+    #         return super(MealPlanViewSet, self).get_serializer(*args, **kwargs)
 
     # use queryset to get only user specific delivieres
     # def get_queryset(self):

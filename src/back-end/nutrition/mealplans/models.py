@@ -12,6 +12,7 @@ class MealPlan(models.Model):
     # = models.CharField(default="None", max_length=100)
     # delcreateddate = models.DateTimeField(auto_now_add=True)
     idMeal = models.AutoField(primary_key=True)
+    users = models.ManyToManyField(User, blank=True, default=1)
     mealType = models.CharField(default="None", max_length=100)
     img = models.ImageField(blank=True, null=True, upload_to=upload_path)
     # User = To whom belongs this delivery (=> cross reference to items)
