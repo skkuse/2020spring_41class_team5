@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   IonSegmentButton,
   IonLabel,
@@ -19,6 +19,7 @@ import { useHistory, RouteComponentProps } from "react-router";
 import { toast } from "../toast";
 import Moment from "react-moment";
 import "moment-timezone";
+import { AppContext } from "../data/AppContextProvider";
 
 interface DeliveryItemProps {
   delivery: Delivery;
@@ -28,6 +29,7 @@ const DeliveryItem: React.FC<DeliveryItemProps> = ({ delivery }) => {
 
   const [busy, setBusy] = useState(false);
   const history = useHistory();
+  const data = useContext(AppContext);
 
   const [userToken, setUserToken] = useState<string>("");
   const token = getToken();

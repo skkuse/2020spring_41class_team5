@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   IonContent,
   IonHeader,
@@ -26,19 +26,20 @@ import "./MealRecoms.css";
 import axios from "axios";
 import MealPlanItem from "../components/MealPlanItem";
 import { thumbsUp, bookmark, newspaper } from "ionicons/icons";
+import MealRecomItem from "../components/MealRecomItem";
+import { AppContext } from "../data/AppContextProvider";
 
 const MealRecoms: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [meals, setMeals] = useState<Meal[]>([]);
   const [loading, setLoading] = useState(false);
+  const data = useContext(AppContext);
 
-  // "http://127.0.0.1:8000/mealplans/recommendations
+  // "http://127.0.0.1:8000/mealplans/recommendations or
+  // http://localhost:8000/mealplans_diets/
   useEffect(() => {
     setLoading(true);
-    axios({
-      method: "GET",
-      url: "http://127.0.0.1:8000/mealplans/",
-    }).then((res) => {
+    axios.get("http://127.0.0.1:8000/recoms/").then((res) => {
       setMeals(res.data);
       setLoading(false);
     });
@@ -66,9 +67,9 @@ const MealRecoms: React.FC = () => {
             ></IonSearchbar>
           </IonToolbar>
         </IonHeader>
-        {/* {loading && <p>Its loading man</p>}
+        {loading && <p>Its loading man</p>}
           {!loading &&
-            meals.map((meal, i) => <MealPlanItem key={i} meal={meal} />)} */}
+            meals.map((meal, i) => <MealRecomItem key={i} meal={meal} />)}
       </IonContent>
     </IonPage>
   );

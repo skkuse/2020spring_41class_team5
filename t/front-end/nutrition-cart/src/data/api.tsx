@@ -1,22 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from 'axios';
 import { StorageAPIWrapper } from "./localStroage";
+import { AppContext } from "./AppContextProvider";
 
 
-// const API: React.FC = () => {
-
-// };
-
-    // const str = `${dayText}`
-    // document.title = str
-    // API.get("mealplans/", {
-    //   headers: { Authorization: AuthStr },
-    //   params: {
-    //     id: 1
-    //     // Token: 12345, Date: dayText
-    //   }}).then((res) => {
-    //   setMeals(res.data);
-    // });
 const storage = new StorageAPIWrapper();
 
 export async function setToken(key: string, value: string) {
@@ -34,30 +21,12 @@ export async function getToken () : Promise<string> {
 
 const Querystring = require('querystring');
 
-// export const loginUser = async (email: string, password: string) => {
-//   try {
-//     // console.log(`${email}`)
-//     // console.log(`${password}`)
-//     var data = { "email": email, "password": password }
-//     const res = await axios.post("http://127.0.0.1:8000/users/login/", Querystring.stringify(data)
-//     ).then((res) => {
-//       setToken("Token", res.data.token);
-//       // getToken();
-//       console.log(res)
-//       return true
-//     });
-//   } catch (error) {
-//     console.log(error)
-//     return false
-//   }
-// }
   const api = axios.create({
     baseURL: `http://127.0.0.1:8000/`,
     headers: {
       post: {
-        authorization: "Token e2fa02549694e3ec31f2f475af734feb56842e33",
+        "authorization": "",
       },
-      // authentication: "Token e2fa02549694e3ec31f2f475af734feb56842e33"
     },
   });
 
@@ -68,11 +37,11 @@ export async function loginUser (email: string, password: string) {
         const res = await api.post("users/login/",
           Querystring.stringify(data)
         );
-        //.then( (res) => {setToken("Token", res.data.token);});
         await setToken("Token", res.data.token);
         var token = await getToken()
-        console.log("The token vlaue is: " + token.toString());
-        return true;
+        const tokenValue = "Token ".concat(token);
+        console.log(tokenValue);
+    return tokenValue;
       } catch (error) {
     console.log(error)
     return false
@@ -129,11 +98,12 @@ export const modifyUserinfo = async (data: any) => {
     console.log(error)
     return false
   }
-}
+};
+
 
 export default axios.create({
   baseURL: `http://127.0.0.1:8000/`,
-  // headers: { 'Authentication': 'Token ' }
+  headers: { 'Authorization': "" }
 });
 
 

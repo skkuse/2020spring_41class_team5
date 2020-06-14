@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   IonPage,
   IonHeader,
@@ -18,8 +18,9 @@ import {
   IonToggle,
 } from "@ionic/react";
 import { Meal } from "../models/meals";
-import api from "../data/api";
 import { RouteComponentProps } from "react-router";
+import axios from "axios";
+import { AppContext } from "../data/AppContextProvider";
 
 interface MealPlanItemProps
   extends RouteComponentProps<{
@@ -27,6 +28,8 @@ interface MealPlanItemProps
   }> {}
 
 const MealIngredients: React.FC<MealPlanItemProps> = ({ match }) => {
+
+  const data = useContext(AppContext);
   const [meal, setMeal] = useState<Meal>();
   const [loading, setLoading] = useState(false);
 
@@ -35,7 +38,9 @@ const MealIngredients: React.FC<MealPlanItemProps> = ({ match }) => {
     // const str = `${dayText}`
     //const document =
     //alert(document)
-    api.get("mealplans/".concat(match.params.id) + "/").then((res) => {
+    axios.get("http://127.0.0.1:8000/mealplans/".concat(match.params.id) + "/", {
+      headers: { 'Authorization': data.state.token } })
+      .then((res) => {
       setMeal(res.data);
       setLoading(false);
       console.log(res.data);

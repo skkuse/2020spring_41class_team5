@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import {
   IonLabel,
   IonRow,
@@ -14,9 +14,13 @@ import {
   IonButton,
   IonIcon,
 } from "@ionic/react";
+import axios from "axios";
 import { Meal } from "../models/meals";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, useHistory } from "react-router";
 import { thumbsUp, bookmark, newspaper } from "ionicons/icons";
+import { StorageAPIWrapper } from "../data/localStroage";
+import { toast } from "../toast";
+import { AppContext } from "../data/AppContextProvider";
 
 interface MealPlanItemProps {
   meal: Meal;
@@ -24,22 +28,39 @@ interface MealPlanItemProps {
 
 // <{ onCalc: () => void; onReset: () => void }>
 const MealRecomItem: React.FC<MealPlanItemProps> = ({ meal }) => {
+
+
+  const storage = new StorageAPIWrapper();
+  const [userToken, setUserToken] = useState<string>("");
+
+  // const [meal, setMeal] = useState<Meal>();
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  const data = useContext(AppContext);
+
+  const addToList = () => {
+    const urlString = "http://127.0.0.1:8000/mealplans/".concat(meal.id.toString()) + "/subscribe/";
+    axios.get(urlString, { headers: { 'Authorization': data.state.token } }).then((res) => {
+      console.log(res.data)
+      history.replace("/meals");
+    });
+  }
+
   return (
     <IonRow>
       <IonCard>
-          <img src={meal.img} />
-         <IonCardHeader>
-          <IonCardSubtitle>{meal.strInstructions}</IonCardSubtitle>
+        <img src={meal.img} />
+        <IonCardHeader>
+          <IonCardSubtitle>{meal.strMeal}</IonCardSubtitle>
           <IonCardTitle>{meal.strMeal}</IonCardTitle>
         </IonCardHeader>
-        <IonCardContent>
-        </IonCardContent>
+        <IonCardContent></IonCardContent>
         <IonFooter>
-          <IonButton color="medium" fill="outline">
+          <IonButton color="secondary" fill="outline">
             <IonIcon icon={thumbsUp} />
             Like
           </IonButton>
-          <IonButton color="medium" fill="outline">
+          <IonButton color="success" fill="outline" onClick={addToList}>
             <IonIcon icon={bookmark} />
             Add2Plan
           </IonButton>

@@ -11,7 +11,7 @@ class MealPlan(models.Model):
 
     id = models.AutoField(primary_key=True)
     users = models.ManyToManyField(User, blank=True,default=1)
-    name = models.CharField(default="None", max_length=100)
+    strMeal = models.CharField(default="None", max_length=100)
     strInstructions = models.CharField(default="None", max_length=3000)
     img = models.CharField(default="None", max_length=200)
     strIngredient1 = models.CharField(default="None", max_length=100, blank = True)

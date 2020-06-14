@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer, useContext } from "react";
 import {
   IonSegmentButton,
   IonLabel,
@@ -38,21 +38,17 @@ import { settings } from "cluster";
 import MealPlanItem from "./MealPlanItem";
 import { Meal } from "../models/meals";
 
+
 import axios from "axios";
-import { StorageAPIWrapper } from "../data/localStroage";
-import { getToken, setToken } from "../data/api";
 import { toast } from "../toast";
 
-// import API from '../data/api';
+
+// const storage = new StorageAPIWrapper();
+
+import { Plugins } from "@capacitor/core";
+import { AppContext } from "../data/AppContextProvider";
 
 const WeekdaySegment: React.FC<RouteComponentProps> = ({ match }) => {
-
-   const api = axios.create({
-    baseURL: `http://127.0.0.1:8000/`,
-    // headers: { 'Authentication': 'Token ' }
-  });
-
-  // const date = Date.now().toString();
 
   const daye = new Date(Date.now())
 
@@ -63,12 +59,9 @@ const WeekdaySegment: React.FC<RouteComponentProps> = ({ match }) => {
   const tDatnD = new Date(daye);
   tDatnD.setDate(daye.getDate() + 2);
 
-    //spoken: the Day after the day after the next Day
+  //spoken: the Day after the day after the next Day
   const tDatDatnDay = new Date(daye);
   tDatDatnDay.setDate(daye.getDate() + 3);
-
-
-  // const customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];
 
   const Weekday = [
     "Mon",
@@ -85,81 +78,31 @@ const WeekdaySegment: React.FC<RouteComponentProps> = ({ match }) => {
   const [dayText, setDay] = useState<string>(daye.toString());
   const [meals, setMeals] = useState<Meal[]>([]);
   const [loading, setLoading] = useState(false);
-  const [userToken, setUserToken] = useState<string>("");
-  // const USER_TOKEN = "3618dc1223f8eb8f168f7925d51c5ca93d89092b";
+  const [userToken, setUserToken] = useState<string>("Nothing");
+  const [tok, setTok] = useState("");
+  const data = useContext(AppContext);
   const history = useHistory();
 
-         const token = getToken();
-         token.then((token) => {
-             if (token !== "") {
-               setUserToken("Token ".concat(token));
-              // const USER_TOKEN = token;
-               console.log(`User token is in Seg if is: ${userToken}`);
-             } else {
-               console.log(`user token in Seg else is: ${userToken}`);
-               setUserToken(token);
-               history.replace("/login");
-             }
-           })
-           .catch(() => {
-             toast("Error while loading tokens. Please login again.");
-           });
+  async function loadData() {
+    const loadedData =
+      await axios.get("http://localhost:8000/mealplans/", { headers: { 'Authorization': data.state.token } })
+        .then((res: { data: React.SetStateAction<Meal[]>; }) => {
+          setMeals(res.data);
+          setLoading(false);
+        }).catch(() => {
+          toast("Error while loading tokens. Please login again.");
+        });
+  }
 
-  // const loadItems = () => {
-  //   setLoading(true);
-  //   // const str = `${dayText}`
-  //   // document.title = str
-  //   API.get("mealplans/", {
-  //     headers: { Authorization: AuthStr },
-  //     params: {
-  //       id: 1
-  //       // Token: 12345, Date: dayText
-  //     }}).then((res) => {
-  //     setMeals(res.data);
-  //     setLoading(false);
-  //   });
-  // }
-
-  useEffect( () => {
-        setLoading(true);
-        // const str = `${dayText}`
-        // document.title = str
-        api.get("mealplans/", {
-            // headers: { Authorization: AuthStr },
-            params: {
-              id: 1,
-              // Token: 12345, Date: dayText
-            },
-          })
-          .then((res) => {
-            setMeals(res.data);
-            setLoading(false);
-          });
+  useEffect(() => {
+    setLoading(true);
+    loadData();
+    setLoading(false);
   }, [setMeals]);
 
-
-  // const goupdate = useEffect( () => {
-  //   setLoading(true);
-  //   // const str = `${dayText}`
-  //   // document.title = str
-  //   API({
-  //     method: "GET",
-  //     url: "http://127.0.0.1:8000/mealplans/",
-  //   }).then((res) => {
-  //     setMeals(res.data);
-  //     setLoading(false);
-  //   });
-  // }, [setMeals]);
-
-      // useIonViewDidEnter(() => {
-      //    const token = getToken();
-      //    console.log(token);
-      // });
-
-
-      useIonViewWillEnter(() => {
-
-      });
+  useIonViewWillEnter(() => {
+    // loadData();
+  });
 
   return (
     <IonPage>
@@ -175,7 +118,6 @@ const WeekdaySegment: React.FC<RouteComponentProps> = ({ match }) => {
             <IonTitle size="large">Meal Plan</IonTitle>
           </IonToolbar>
         </IonHeader>
-
         <IonGrid>
           {loading && <p>Its loading man</p>}
           {!loading &&

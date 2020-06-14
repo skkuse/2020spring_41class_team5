@@ -46,8 +46,9 @@ var x: number
 interface ShoppingListProps {
   shoppinglist: shoppingItem[];
 }
+import Querystring from "querystring";
+
 const ShoppingList: React.FC =() => {
-  const Querystring = require('querystring');
   const [purchaseStatus, setPurchaseStatus] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [shoppingList, setshoppingList] = useState<shoppingItem[]>([]);
@@ -81,28 +82,12 @@ const ShoppingList: React.FC =() => {
       axios({
         method:"PUT",
         url: "http://localhost:8000/shoppings/".concat(Item.id.toString())+"/",
-        data: Querystring.stringify(d) 
+        data: Querystring.stringify(d)
       });
       alert(JSON.stringify(d, null, 2))
     });
   }
-  
-  /*
-  const changestate=()=>{
 
-    const dat ={
-      "deliverydate": "",
-      "deliveryadress": "",
-      "user": "admin@skku.edu",
-      "shoppingList" : shoppingList
-    }
-    axios({
-      method:"POST",
-      url: "http://localhost:8000/deliveries/",
-      data: Querystring.stringify(dat)      
-    });
-    alert(JSON.stringify(data, null, 2));
-  }*/
 
   return (
     <IonPage>

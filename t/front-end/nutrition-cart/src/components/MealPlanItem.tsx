@@ -33,7 +33,7 @@ const MealPlanItem: React.FC<MealPlanItemProps> = ({ meal }) => {
             <IonCardSubtitle></IonCardSubtitle>
             <IonCardTitle>{meal.strMeal}</IonCardTitle>
           </IonCardHeader>
-          <IonCardContent>{meal.strInstructions}</IonCardContent>
+          <IonCardContent></IonCardContent>
         </IonCard>
       </IonCol>
     </IonRow>

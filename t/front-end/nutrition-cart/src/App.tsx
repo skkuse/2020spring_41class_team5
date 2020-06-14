@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
@@ -8,6 +8,7 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
+  useIonViewWillEnter,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { ellipse, square, triangle, people, cart, basket, gift,restaurant, settings } from "ionicons/icons";
@@ -50,6 +51,8 @@ import Login from "./pages/Login";
 import MealInstructions from "./pages/MealInstructions";
 import MealNutrition from "./pages/MealNutrition";
 import MealIngredients from "./pages/MealIngredients";
+import AppContextProvider, { AppContext } from "./data/AppContextProvider";
+import { Plugins } from "@capacitor/core";
   const clearStorage = async () => {
     const storage = new StorageAPIWrapper();
     let result: boolean = await storage.openStore({});
@@ -57,141 +60,107 @@ import MealIngredients from "./pages/MealIngredients";
   }
 
  // clearStorage()
-
-
-  console.log("clear");
+ // console.log("clear");
 
 const App: React.FC = () => {
 
   const [isAuth, setAuth] = useState<boolean>(false);
+  const data = useContext(AppContext);
 
+  const showSplash = () => {
+    const { SplashScreen } = Plugins;
+    SplashScreen.show();
+    setTimeout(() => SplashScreen.hide(), 3000);
+  };
 
-  // getToken()
-
-    // const getToken = async () => {
-    //   let result: boolean = await storage.openStore({});
-    //   if (result){
-    //    var token = await storage.getItem("Token")
-    //    return token
-    //    console.log(token)
-    //   }else {
-    //     return null
-    //   }
-    // };
-
-    // useEffect( () => {
-    //   getToken()
-    // }, [setAuth]);
-
-  // const checkAuth = async () => {
-  //   let result: boolean = await storage.openStore({});
-  //   var value = await storage.getItem("Token");
-  //   if (value) {
-  //     console.log(value)
-  //     setAuth(true)
-  //   }
-  //   else console.log("not Authed")
-  // }
-
-    // useEffect( () => {
-    //   getToken().then( token => {
-    //     if (token) {
-    //       console.log("if token is." + token);
-    //       window.history.replaceState({}, "", "/meals");
-    //     } else {
-    //       console.log("else token: " + token);
-    //       window.history.replaceState({}, "", "/login");
-    //     }
-    //   })
-    // }, []);
-
-  console.log("rendered")
-  // useEffect( () => {
-  //   getToken().then( (token) =>{
-  //     if (token !== false) {
-  //     setAuth(true);
-  //     window.history.replaceState({}, "", "/meals");
-  //     console.log(isAuth);
-  //     console.log(getToken())
-  //     } else {
-  //     setAuth(false);
-  //     console.log(isAuth);
-  //     console.log(getToken());
-  //   }
-  //   }
-  //   ).catch( () => {
-  //     console.log(isAuth);
-  //     console.log(getToken());
-  //   });
-  //   }, [setAuth]);
+ useIonViewWillEnter( () => {
+  //  showSplash();
+ });
 
 return (
   <IonApp>
-    <IonReactRouter>
-      {!isAuth && (
-        <IonRouterOutlet>
-          <Route path="/login" component={Login} exact={true} />
-          <Route path="/Register" component={Register} exact={true} />
-          <Route path="/meals" component={Meals} exact={true} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/mypage" component={MyPage} />
-          <Route path="/changepw" component={ChangePW} />
-          <Route path="/survey" component={Survey} />
-           {/* <Route path={`/meals/recoms`} component={MealRecoms} /> */}
-           <Route path={`/meals/:id/instructions`} component={MealInstructions} />
-           <Route path={`/meals/:id/nutritions`} component={MealNutrition} />
-           <Route path="/faq" component={FAQ} />
-          <Route path="/servicecenter" component={Servicecenter} />
-          <Route path="/shoppings" component={Shoppings} exact={true} />
-            <Route path="/deliveries" component={Deliveries} exact={true} />
-            <Route path={`/meals/:id/ingredients`} component={MealIngredients} exact={true} />
-             
-          <Route
-            exact={true}
-            path="/"
-            render={(props) => <Redirect to="/login" />}
-          />
-        </IonRouterOutlet>
-      )}
-
-      {isAuth && (
-        <IonTabs>
+    <AppContextProvider>
+      <IonReactRouter>
+        {(data.state.token === "") && (
           <IonRouterOutlet>
-            <Route path="/meals" component={MenuPlan} exact={true} />
+            <Route path="/login" component={Login} exact={true} />
+            <Route path="/Register" component={Register} exact={true} />
+            <Route path="/meals" component={Meals} exact={true} />
             <Route path="/settings" component={Settings} />
             <Route path="/mypage" component={MyPage} />
             <Route path="/changepw" component={ChangePW} />
             <Route path="/survey" component={Survey} />
+            <Route
+              path={`/meals/:id/instructions`}
+              component={MealInstructions}
+            />
+            <Route path={`/meals/:id/nutritions`} component={MealNutrition} />
             <Route path="/faq" component={FAQ} />
-          <Route path="/servicecenter" component={Servicecenter} />
-           <Route
+            <Route path="/servicecenter" component={Servicecenter} />
+            <Route path="/shoppings" component={Shoppings} exact={true} />
+            <Route path="/deliveries" component={Deliveries} exact={true} />
+            <Route path={`/meals/:id/ingredients`} component={MealIngredients} exact={true} />
+            <Route
               exact={true}
               path="/"
-              render={(props) => <Redirect to="/meals" />}
+              render={() => <Redirect to="/login" />}
             />
           </IonRouterOutlet>
+        )}
 
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="MealPlan" href="/meals">
-              <IonIcon icon={restaurant} />
-              <IonLabel>Meals</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="shoppings" href="/shoppings">
-              <IonIcon icon={basket} />
-              <IonLabel>Shopping</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="deliveries" href="/deliveries">
-              <IonIcon icon={gift} />
-              <IonLabel>Delivery</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="settings" href="/settings">
-              <IonIcon icon={settings} />
-              <IonLabel>Settings</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
-      )}
-    </IonReactRouter>
+        {/* {(data.state.token !== "") && (
+          <IonTabs>
+            <IonRouterOutlet>
+              <Route path="/login" component={Login} exact={true} />
+              <Route path="/Register" component={Register} exact={true} />
+              <Route path="/meals" component={Meals} exact={true} />
+              <Route path="/settings" component={Settings} />
+              <Route path="/mypage" component={MyPage} />
+              <Route path="/changepw" component={ChangePW} />
+              <Route path="/survey" component={Survey} />
+              <Route
+                ath={`/meals/:id/instructions`}
+                component={MealInstructions}
+              />
+              <Route path={`/meals/:id/nutritions`} component={MealNutrition} />
+              <Route path="/faq" component={FAQ} />
+              <Route path="/servicecenter" component={Servicecenter} />
+              <Route path="/shoppings" component={Shoppings} exact={true} />
+              <Route path="/deliveries" component={Deliveries} exact={true} />
+              <Route
+                path={`/meals/:id/ingredients`}
+                component={MealIngredients}
+                exact={true}
+              />
+              <Route
+                exact={true}
+                path="/"
+                render={(props) => <Redirect to="/meals" />}
+              />
+            </IonRouterOutlet>
+
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="MealPlan" href="/meals">
+                <IonIcon icon={restaurant} />
+                <IonLabel>Meals</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="shoppings" href="/shoppings">
+                <IonIcon icon={basket} />
+                <IonLabel>Shopping</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="deliveries" href="/deliveries">
+                <IonIcon icon={gift} />
+                <IonLabel>Delivery</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="settings" href="/settings">
+                <IonIcon icon={settings} />
+                <IonLabel>Settings</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
+        )} */}
+      </IonReactRouter>
+    </AppContextProvider>
   </IonApp>
 );};
 

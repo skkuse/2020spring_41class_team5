@@ -1,3 +1,4 @@
+from rest_framework import mixins, generics
 import logging
 from django.db.models import Q
 from django.shortcuts import redirect, render
@@ -6,9 +7,9 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.decorators import authentication_classes, api_view, permission_classes
 
 # Own Models
@@ -29,26 +30,17 @@ objects = UserManager()
 #         return super().get_serializer(*args, **kwargs)
 
 class MealPlanViewSet(viewsets.ModelViewSet):
-    authentication_classes = []  # TokenAuthentication
-    permission_classes = []  # IsAuthenticated
+    authentication_classes = [TokenAuthentication]  # TokenAuthentication
+    permission_classes = [IsAuthenticated]  #
     #parser_classes = (MultiPartParser, JSONParser)
-    queryset = MealPlan.objects.all()
+    #queryset = MealPlan.objects.all()
     model = MealPlan
     serializer_class = MealPlanSerializer  # MealPlanSerializer
 
-    # def get_serializer(self, *args, **kwargs):
-    #         if self.request.method.lower() == 'post':
-    #             data = kwargs.get('data')
-    #             kwargs['many'] = isinstance(data, list)
-    #         return super(MealPlanViewSet, self).get_serializer(*args, **kwargs)
-
-
-    # use queryset to get only user specific delivieres
-    # def get_queryset(self):
-    #   my_id = self.request.query_params.get('id')
-    #   #my_id = int(parent, base=0)
-    #   #print(my_id)
-    #   return MealPlan.objects.filter(id=my_id)
+    #use queryset to get only user specific mealplans
+    def get_queryset(self):
+      user = self.request.user
+      return MealPlan.objects.filter(users=user)
 
 logger = logging.getLogger(__name__)
 
@@ -67,3 +59,10 @@ def change_mealplean(request, pk, instruction):
          meal.users.remove(user)
         #MealPlan.unsubscribe(self.request.user, mealplan)
       return redirect("/mealplans")
+
+
+@permission_classes([])
+@authentication_classes([])
+class MealPlanVS(ListAPIView):
+  queryset = MealPlan.objects.all()
+  serializer_class = MealPlanSerializer

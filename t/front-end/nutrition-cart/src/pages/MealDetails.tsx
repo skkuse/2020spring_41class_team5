@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   IonPage,
   IonHeader,
@@ -18,8 +18,11 @@ import {
   IonToggle,
 } from "@ionic/react";
 import { Meal } from "../models/meals";
-import api from "../data/api";
+
+
 import { RouteComponentProps } from "react-router";
+import { AppContext } from "../data/AppContextProvider";
+import axios from "axios";
 
 interface MealPlanItemProps extends RouteComponentProps<{
   id: string;
@@ -28,12 +31,12 @@ interface MealPlanItemProps extends RouteComponentProps<{
 const MealDetails: React.FC<MealPlanItemProps> = ({match}) => {
   const [meal, setMeal] = useState<Meal>();
   const [loading, setLoading] = useState(false);
+  const data = useContext(AppContext);
+
   useEffect( () => {
     setLoading(true);
-    // const str = `${dayText}`
-    //const document = 
-//alert(document)
-    api.get("mealplans/".concat(match.params.id) +"/")
+    axios.get("http://localhost:8000/mealplans/".concat(match.params.id) + "/", {
+       headers: { 'Authorization': data.state.token } })
       .then((res) => {
         setMeal(res.data);
         setLoading(false);
@@ -60,7 +63,7 @@ const MealDetails: React.FC<MealPlanItemProps> = ({match}) => {
 
           <IonItem button routerLink={`/meals/${meal?.id}/nutritions`}>
             <IonLabel>Nutrition Overview</IonLabel>
-            
+
           </IonItem>
           <IonItem button routerLink={`/meals/${meal?.id}/ingredients`}>
             <IonLabel>Ingredients</IonLabel>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Link,
   Redirect,
@@ -29,6 +29,7 @@ import {
   IonIcon,
   IonRouterLink,
   IonLoading,
+  IonImg,
 } from "@ionic/react";
 import { logoTwitter } from "ionicons/icons";
 
@@ -41,9 +42,11 @@ import DeliveryItem from "../components/DeliveryItem";
 import { Plugins } from "@capacitor/core";
 import { StorageAPIWrapper } from "../data/localStroage";
 import { toast } from "../toast";
+import { AppContext } from "../data/AppContextProvider";
 
 const Login: React.FC<RouteComponentProps> = ({ history }) => {
   const his = useHistory();
+  const data = useContext(AppContext);
 
   const routeChange = () => {
     let path = `/`;
@@ -57,7 +60,6 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
   };
 
   const [loading, setLoading] = useState(false);
-
   const [isAuth, setAuth] = useState<boolean>(false);
 
   const [email, setEmail] = useState<string>("");
@@ -69,6 +71,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
     if (!res) {
       toast("Error while trying to login.");
     } else {
+      data.state.token = res;
       toast("Login success");
       history.replace("/meals");
     }
@@ -89,9 +92,9 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
           <IonTitle>Login</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <img src="/images/logo.png"/>
       <IonContent>
         <IonLoading message="Loading ..." duration={10} isOpen={loading} />
+        <IonImg src="/images/logo.png" />
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle color="primary" size="large">

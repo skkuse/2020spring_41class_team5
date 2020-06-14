@@ -37,16 +37,9 @@ const Deliveries: React.FC = () => {
   const [oldDeliveries, setOldDeliveries] = useState<Delivery[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const api = axios.create({
-    baseURL: `http://127.0.0.1:8000/`,
-    headers: {
-      authorization: "Token e2fa02549694e3ec31f2f475af734feb56842e33",
-    },
-  });
-
     useEffect(() => {
       setLoading(true);
-      api.get("deliveries/")
+      axios.get("http://127.0.0.1:8000/deliveries/")
         .then((res) => {
           setDeliveries(res.data);
           const response = res.data;
