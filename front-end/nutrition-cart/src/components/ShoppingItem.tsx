@@ -37,7 +37,7 @@ const ShoppingItem: React.FC<ShoppingItemProps> = ({ shoppingItem }) => {
       <IonGrid>
         <IonRow>
           <IonCol></IonCol>
-          {shoppingItem.desc}
+          {/* {shoppingItem.desc} */}
           <IonCol></IonCol>
           <IonCol></IonCol>
           <IonCol></IonCol>

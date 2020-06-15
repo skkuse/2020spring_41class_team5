@@ -60,66 +60,7 @@ const MealIngredients: React.FC<MealPlanItemProps> = ({ match }) => {
       <IonContent>
         <IonImg src={meal?.img}></IonImg>
         <IonList>
-          {meal?.strIngredient1 !== "" && (
-            <IonItem> {meal?.strIngredient1} </IonItem>
-          )}
-          {meal?.strIngredient2 !== "" && (
-            <IonItem> {meal?.strIngredient2} </IonItem>
-          )}
-          {meal?.strIngredient3 !== "" && (
-            <IonItem> {meal?.strIngredient3} </IonItem>
-          )}
-          {meal?.strIngredient4 !== "" && (
-            <IonItem> {meal?.strIngredient4} </IonItem>
-          )}
-          {meal?.strIngredient5 !== "" && (
-            <IonItem> {meal?.strIngredient5} </IonItem>
-          )}
-          {meal?.strIngredient6 !== "" && (
-            <IonItem> {meal?.strIngredient6} </IonItem>
-          )}
-          {meal?.strIngredient7 !== "" && (
-            <IonItem> {meal?.strIngredient7} </IonItem>
-          )}
-          {meal?.strIngredient8 !== "" && (
-            <IonItem> {meal?.strIngredient8} </IonItem>
-          )}
-          {meal?.strIngredient9 !== "" && (
-            <IonItem> {meal?.strIngredient9} </IonItem>
-          )}
-          {meal?.strIngredient10 !== "" && (
-            <IonItem> {meal?.strIngredient10} </IonItem>
-          )}
-          {meal?.strIngredient11 !== "" && (
-            <IonItem> {meal?.strIngredient11} </IonItem>
-          )}
-          {meal?.strIngredient12 !== "" && (
-            <IonItem> {meal?.strIngredient12} </IonItem>
-          )}
-          {meal?.strIngredient13 !== "" && (
-            <IonItem> {meal?.strIngredient13} </IonItem>
-          )}
-          {meal?.strIngredient14 !== "" && (
-            <IonItem> {meal?.strIngredient14} </IonItem>
-          )}
-          {meal?.strIngredient15 !== "" && (
-            <IonItem> {meal?.strIngredient15} </IonItem>
-          )}
-          {meal?.strIngredient16 !== "" && (
-            <IonItem> {meal?.strIngredient16} </IonItem>
-          )}
-          {meal?.strIngredient17 !== "" && (
-            <IonItem> {meal?.strIngredient17} </IonItem>
-          )}
-          {meal?.strIngredient18 !== "" && (
-            <IonItem> {meal?.strIngredient18} </IonItem>
-          )}
-          {meal?.strIngredient19 !== "" && (
-            <IonItem> {meal?.strIngredient19} </IonItem>
-          )}
-          {meal?.strIngredient20 !== "" && (
-            <IonItem> {meal?.strIngredient20} </IonItem>
-          )}
+          {meal?.ingredients.map((ingred, key) => <IonItem> {ingred.name} </IonItem>)}
         </IonList>
       </IonContent>
     </IonPage>

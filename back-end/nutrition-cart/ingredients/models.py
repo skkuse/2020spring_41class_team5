@@ -3,6 +3,8 @@ from django.contrib.postgres.fields import ArrayField
 
 from django.db import models
 from django.utils import timezone
+from shoppings.models import ShoppingList
+from mealplans.models import MealPlan
 # from users.models import User
 
 def upload_path(instance, filename):
@@ -18,6 +20,9 @@ class Ingredients(models.Model):
     carbohydrate = models.DecimalField(decimal_places=5, max_digits=10)
     sodium= models.DecimalField(decimal_places=5, max_digits=10)
     vitaminc = models.DecimalField(decimal_places=5, max_digits=10)
+    shoppingList = models.ManyToManyField(ShoppingList, related_name='ingredients', null=True)
+    mealplan = models.ManyToManyField(MealPlan, related_name='ingredients', null=True)
+
     #img2 = models.ImageField(blank= True, null=True)
     #list = ArrayField(models.CharField(max_length=10), default=list)
     # img = models.Image

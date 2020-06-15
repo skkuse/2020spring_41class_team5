@@ -1,3 +1,5 @@
+import { Ingredient } from "./Ingredient";
+
 export interface Meal {
   id: number;
   strMeal: string;
@@ -43,4 +45,6 @@ export interface Meal {
   intMeasure18: number;
   intMeasure19: number;
   intMeasure20: number;
+  users: [];
+  ingredients: Ingredient[];
 }

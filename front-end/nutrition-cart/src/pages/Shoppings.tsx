@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Component } from "react";
+import { Component, useContext } from "react";
 import React, { useState, useEffect } from "react";
 import { RefresherEventDetail } from '@ionic/core';
 import {
@@ -34,6 +34,7 @@ import { shoppingItem } from "../models/shoppingItem";
 import ShoppingItem from "../components/ShoppingItem";
 import { RouteComponentProps } from "react-router";
 import Querystring from "querystring";
+import { AppContext } from "../data/AppContextProvider";
 
 function doRefresh(event: CustomEvent<RefresherEventDetail>) {
   console.log('Begin async operation');
@@ -54,6 +55,7 @@ const ShoppingList: React.FC =() => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [shoppingList, setshoppingList] = useState<shoppingItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const tokk = useContext(AppContext);
 
   useEffect(() => {
     setLoading(true);
@@ -82,11 +84,13 @@ const ShoppingList: React.FC =() => {
         "state": false,
         "delivery": 1
       }
-      axios({
-        method:"PUT",
-        url: "http://192.168.0.244:8000/shoppings/".concat(Item.id.toString())+"/",
-        data: Querystring.stringify(d)
-      });
+      axios.put("http://192.168.0.244:8000/shoppings/".concat(Item.id.toString())+"/", Querystring.stringify(d),
+        {
+          headers: {
+            'Authorization': tokk.state.token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }});
+
       alert(JSON.stringify(d, null, 2))
     });
   }

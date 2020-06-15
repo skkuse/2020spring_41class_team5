@@ -76,7 +76,7 @@ const MealRecoms: React.FC = () => {
             duration={5000}
           />}
           {!loading &&
-            meals.map((meal, i) => <MealRecomItem key={i} meal={meal} />)}
+            meals.map((meal, key) => <MealRecomItem key={key} meal={meal} />)}
 
       </IonContent>
     </IonPage>

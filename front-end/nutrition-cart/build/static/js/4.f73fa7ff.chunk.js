@@ -1,2 +1,0 @@
-(this["webpackJsonpnutrition-cart"]=this["webpackJsonpnutrition-cart"]||[]).push([[4],{226:function(n,t,i){"use strict";i.r(t),i.d(t,"startStatusTap",(function(){return e}));var o=i(22),e=function(){var n=window;n.addEventListener("statusTap",(function(){Object(o.h)((function(){var t=n.innerWidth,i=n.innerHeight,e=document.elementFromPoint(t/2,i/2);if(e){var r=e.closest("ion-content");r&&r.componentOnReady().then((function(){Object(o.n)((function(){return r.scrollToTop(300)}))}))}}))}))}}}]);
-//# sourceMappingURL=4.f73fa7ff.chunk.js.map

@@ -38,6 +38,7 @@ class MealPlanViewSet(CreateListMixin, viewsets.ModelViewSet):
     serializer_class = MealPlanSerializer  # MealPlanSerializer
 
     #use queryset to get only user specific mealplans
+
     def get_queryset(self):
       user = self.request.user
       return MealPlan.objects.filter(users=user)

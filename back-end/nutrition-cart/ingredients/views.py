@@ -31,9 +31,11 @@ class IngredientsViewSet(CreateListMixin, viewsets.ModelViewSet):
     queryset = Ingredients.objects.all()
     model = Ingredients
     serializer_class = IngredientsSerializer
-    
-# use queryset to get only user specific delivieres
-    # def get_queryset(self):
-    #user = self.request.user
-    #my_deliveries = Q(user=user)
-    # return MealPlan.objects.filter(my_deliveries)
+    # use queryset to get only user specific delivieres
+
+    def get_queryset(self):
+      user = self.request.user
+      user_ingreds = Q(user=user)
+      return Ingredients.objects.filter(user_ingreds)
+
+

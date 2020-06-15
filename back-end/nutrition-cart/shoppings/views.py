@@ -17,13 +17,20 @@ objects = UserManager()
 
 
 class ShoppingListViewSet(viewsets.ModelViewSet):
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [TokenAuthentication]  # TokenAuthentication
+    permission_classes = [IsAuthenticated]  # IsAuthenticated
     serializer_class = ShoppingListSerializer
-    queryset = ShoppingList.objects.all()
+    #queryset = ShoppingList.objects.all()
+    def get_queryset(self):
+      user = self.request.user
+      user_shoppings = Q(user=user)
+      return ShoppingList.objects.filter(user_shoppings)
+
+
+
+    # def get_queryset(self):
+    #   user = self.request.user
+    #   return ShoppingList.objects.filter(user=user)
+
 
 # use queryset to get only user specific delivieres
-    # def get_queryset(self):
-    #user = self.request.user
-    #my_deliveries = Q(user=user)
-    # return MealPlan.objects.filter(my_deliveries)
