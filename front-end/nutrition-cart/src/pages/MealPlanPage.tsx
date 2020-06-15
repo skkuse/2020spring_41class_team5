@@ -24,6 +24,12 @@ import {
   IonDatetime,
   useIonViewDidEnter,
   useIonViewWillEnter,
+  IonList,
+  IonSlides,
+  IonSlide,
+  IonItemSliding,
+  IonItemOptions,
+  IonItemOption,
 } from "@ionic/react";
 
 import { IonReactRouter } from "@ionic/react-router";
@@ -99,6 +105,11 @@ const MealPlanPage: React.FC<RouteComponentProps> = ({ match }) => {
         });
   }
 
+  const slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
+
   useEffect(() => {
     setLoading(true);
     // loadData();
@@ -122,12 +133,13 @@ const MealPlanPage: React.FC<RouteComponentProps> = ({ match }) => {
             <IonTitle size="large">Meal Plan</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonGrid>
-          {loading && <p>Its loading man</p>}
-          {!loading &&
-            meals.map((meal, i) => <MealPlanItem key={i} meal={meal} />)}
-        </IonGrid>
-
+        <IonList>
+          {/* <IonSlides pager={true} options={slideOpts}> */}
+            {loading && <p>Its loading man</p>}
+            {!loading &&
+              meals.map((meal, i) => <MealPlanItem key={i} meal={meal} />)}
+         {/* </IonSlides> */}
+        </IonList>
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton
             routerLink={`${match.url}/recoms`}

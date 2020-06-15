@@ -57,9 +57,9 @@ const MealInstructions: React.FC<MealPlanItemProps> = ({match}) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <IonImg src={meal?.img}></IonImg>
         <IonList>
-          <IonImg src= {meal?.img}></IonImg>
-            {meal?.strInstructions.split("\\n").map((item, i) => (
+          {meal?.strInstructions.split(".").map((item, i) => (
               <IonItem key={i}> {item}</IonItem>
             ))}
         </IonList>

@@ -43,8 +43,8 @@ const MealRecomItem: React.FC<MealPlanItemProps> = ({ meal }) => {
     await axios.get(urlString, { headers: { 'Authorization': data.state.token,
     'Content-Type': 'application/x-www-form-urlencoded' } }).then((res) => {
       if (res) {
-        toast("Meal added.");
-        history.goBack();
+        toast("Meal was added.");
+        history.replace("/meals");
       } else {
         data.state.token = data.state.token;
         toast("Error while trying to add meal.");
@@ -70,7 +70,7 @@ const MealRecomItem: React.FC<MealPlanItemProps> = ({ meal }) => {
             <IonIcon icon={bookmark} />
             Add2Plan
           </IonButton>
-          <IonButton color="medium" fill="outline">
+          <IonButton color="medium" fill="outline" routerLink={`/meals/${meal.id}`}>
             <IonIcon icon={newspaper} /> Details
           </IonButton>
         </IonFooter>

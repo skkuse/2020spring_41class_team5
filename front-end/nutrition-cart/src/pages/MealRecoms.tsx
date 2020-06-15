@@ -19,6 +19,7 @@ import {
   IonRow,
   IonCol,
   IonFooter,
+  IonLoading,
 } from "@ionic/react";
 import { Meal } from "../models/meals";
 import "./MealRecoms.css";
@@ -44,7 +45,6 @@ const MealRecoms: React.FC = () => {
       setLoading(false);
     });
   }, [setMeals]);
-
   return (
     <IonPage>
       <IonHeader>
@@ -67,9 +67,17 @@ const MealRecoms: React.FC = () => {
             ></IonSearchbar>
           </IonToolbar>
         </IonHeader>
-        {loading && <p>Its loading man</p>}
+        {loading &&
+          <IonLoading
+            cssClass='my-custom-class'
+            isOpen={loading}
+            onDidDismiss={() => setLoading(false)}
+            message={'Please wait...'}
+            duration={5000}
+          />}
           {!loading &&
             meals.map((meal, i) => <MealRecomItem key={i} meal={meal} />)}
+
       </IonContent>
     </IonPage>
   );

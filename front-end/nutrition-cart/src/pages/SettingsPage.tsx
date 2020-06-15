@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   IonContent,
   IonHeader,
@@ -9,23 +9,16 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardContent,
   IonItem,
-  IonThumbnail,
   IonLabel,
-  IonGrid,
 } from "@ionic/react";
 
-import moment from "moment/moment.js";
-
-import axios from "axios";
 import { AppContext } from "../data/AppContextProvider";
 
 const SettingsPage: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const data = useContext(AppContext);
-
   return (
 
     <IonPage>

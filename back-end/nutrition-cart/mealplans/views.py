@@ -22,17 +22,17 @@ from mealplans.serializers import MealPlanSerializer
 objects = UserManager()
 
 
-# class CreateListMixin:
-# #     """Allows bulk creation of a resource."""
-#     def get_serializer(self, *args, **kwargs):
-#         if isinstance(kwargs.get('data', {}), list):
-#             kwargs['many'] = True
-#         return super().get_serializer(*args, **kwargs)
+class CreateListMixin:
+#     """Allows bulk creation of a resource."""
+    def get_serializer(self, *args, **kwargs):
+        if isinstance(kwargs.get('data', {}), list):
+            kwargs['many'] = True
+        return super().get_serializer(*args, **kwargs)
 
-class MealPlanViewSet(viewsets.ModelViewSet):
+
+class MealPlanViewSet(CreateListMixin, viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]  # TokenAuthentication
-    permission_classes = [IsAuthenticated]  #
-    #parser_classes = (MultiPartParser, JSONParser)
+    permission_classes = [IsAuthenticated]  # IsAuthenticated
     #queryset = MealPlan.objects.all()
     model = MealPlan
     serializer_class = MealPlanSerializer  # MealPlanSerializer

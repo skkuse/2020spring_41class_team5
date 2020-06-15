@@ -14,6 +14,7 @@ class MealPlan(models.Model):
     strMeal = models.CharField(default="None", max_length=100)
     strInstructions = models.CharField(default="None", max_length=3000)
     img = models.CharField(default="None", max_length=200)
+    mealType = models.CharField(default="None", max_length=100)
     strIngredient1 = models.CharField(default="None", max_length=100, blank = True)
     strIngredient2 = models.CharField(default="None", max_length=100, blank = True)
     strIngredient3 = models.CharField(default="None", max_length=100, blank = True)
