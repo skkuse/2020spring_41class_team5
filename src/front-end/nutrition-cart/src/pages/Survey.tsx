@@ -17,11 +17,14 @@ import {
   IonCheckbox,
   IonRow,
   IonCol,
+  IonRadio,
+  IonRadioGroup,
+  IonListHeader,
   } from '@ionic/react';
+import api, { registerUserinfo } from '../data/api';
+import { registerWebPlugin } from '@capacitor/core';
 
 let defaultValues = {
-  email: "",
-  password: "",
   name: "",
   gender: "",
   address: "",
@@ -44,6 +47,7 @@ const Survey :React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [checked, setChecked] = useState();
+  const [selected, setSelected] = useState<string>('maintain_weight');
 
 
   const { control, register, handleSubmit, formState } = useForm({
@@ -55,14 +59,13 @@ const Survey :React.FC = () => {
 
   const onSubmit = (data: any) => {
     setLoading(true);
-    setData(data);
-    axios.post('http://127.0.0.1:8000/userinfo', data)
-    .then((res) => {
-      console.log(res.data)
+    const res = registerUserinfo(data)
+    if(!res){
+      console.log(data)
       setLoading(false);
-    }).catch((error) => {
-      console.log(error)
-    })
+    } else {
+      console.log(Error)
+    }
   }
 
     return (
@@ -368,6 +371,30 @@ const Survey :React.FC = () => {
               </IonItem>
             </IonList>
           </IonItem>
+
+          <IonItem>
+            <IonRadioGroup value={selected} onIonChange={e => setSelected(e.detail.value)}>
+            <IonListHeader>
+              <IonLabel>Purpose</IonLabel>
+            </IonListHeader>
+
+            <IonItem>
+              <IonLabel>Lose Weight</IonLabel>
+              <IonRadio slot="start" value="lose_weight" />
+            </IonItem>
+
+            <IonItem>
+              <IonLabel>Gain Weight</IonLabel>
+              <IonRadio slot="start" value="gain_weight" />
+            </IonItem>
+
+            <IonItem>
+              <IonLabel>Maintain Weight</IonLabel>
+              <IonRadio slot="start" value="maintain_weight" />
+            </IonItem>
+          </IonRadioGroup>
+          </IonItem>
+
           <IonRow>
             <IonCol></IonCol>
             <IonCol>
