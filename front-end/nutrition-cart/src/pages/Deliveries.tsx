@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   IonContent,
   IonHeader,
@@ -22,6 +22,7 @@ import moment from "moment/moment.js";
 
 import "./Deliveries.css";
 import axios from "axios";
+import { AppContext } from "../data/AppContextProvider";
 
  const currentdate = new Date(Date.now());
 
@@ -36,10 +37,13 @@ const Deliveries: React.FC = () => {
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [oldDeliveries, setOldDeliveries] = useState<Delivery[]>([]);
   const [loading, setLoading] = useState(false);
+  const data = useContext(AppContext);
 
     useEffect(() => {
       setLoading(true);
-      axios.get("http://127.0.0.1:8000/deliveries/")
+      axios.get("http://192.168.0.244:8000/deliveries/", {
+        headers: { 'Authorization': data.state.token, 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
         .then((res) => {
           setDeliveries(res.data);
           const response = res.data;

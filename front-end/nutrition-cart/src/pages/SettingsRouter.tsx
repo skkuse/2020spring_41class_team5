@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from "react";
 
 import {
@@ -41,31 +43,27 @@ import { StorageAPIWrapper } from "../data/localStroage";
 import MealInstructions from "./MealInstructions";
 import MealNutrition from "./MealNutrition";
 import MealIngredients from "./MealIngredients";
-import MealPlanPage from "./MealPlanPage";
-// import { connect } from "../data/connect";
+import MyPage from "./MyPage";
+import ChangePW from "./ChangePW";
+import Survey from "./Survey";
+import FAQ from "./FAQ";
+import Servicecenter from "./Servicecenter";
 
-// interface DispatchProps {}
-// interface OwnProps {}
-interface StateProps {
-  meals: Meal[];
-}
+// const SettingsRouter: React.FC<RouteComponentProps> = ({ match }) => {
 
-interface MealListProps extends StateProps {} //, OwnProps, DispatchProps
+//   return (
 
-const MealPlan: React.FC<RouteComponentProps> = ({ match }) => {
+//     <IonRouterOutlet>
+//       <Route path={`/settings/`} component={Settings} exact={true} />
+//       <Route path={`${match.url}/mypage`} component={MyPage} />
+//       <Route path={`${match.url}/changepw`} component={ChangePW} />
+//       <Route path={`${match.url}/survey`} component={Survey} />
+//       <Route path={`${match.url}/faq`} component={FAQ} />
+//       <Route path={`${match.url}/servicecenter`} component={Servicecenter} />
+//     </IonRouterOutlet>
 
-  return (
-      <IonRouterOutlet>
-        <Route exact path={`${match.url}/recoms`} component={MealRecoms} />
-        <Route exact path={`${match.url}/:id`} component={MealDetails} />
-        <Route exact path={`${match.url}/:id/nutritions`} component={MealNutrition} />
-        <Route exact path={`${match.url}/:id/instructions`} component={MealInstructions} />
-        <Route exact path={`${match.url}/:id/ingredients`} component={MealIngredients}  />
-        <Route exact path={`${match.url}/`} component={MealPlanPage} />
-        {/* <Route exact path={`${match.url}`} render={(props) => { return <WeekdaySegment {...props} /> } } /> */}
-      </IonRouterOutlet>
-  );
-};
+//   );
+// };
 
-export default MealPlan;
+// export default SettingsRouter;
 

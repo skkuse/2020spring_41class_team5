@@ -37,7 +37,7 @@ const MealNutrition: React.FC<MealPlanItemProps> = ({match}) => {
 
   useEffect( () => {
     setLoading(true);
-    axios.get("http://127.0.0.1:8000/mealplans/".concat(match.params.id) + "/",{
+    axios.get("http://192.168.0.244:8000/mealplans/".concat(match.params.id) + "/",{
       headers: { 'Authorization': data.state.token } })
       .then((res) => {
         setMeal(res.data);

@@ -38,11 +38,17 @@ const MealRecomItem: React.FC<MealPlanItemProps> = ({ meal }) => {
   const history = useHistory();
   const data = useContext(AppContext);
 
-  const addToList = () => {
-    const urlString = "http://127.0.0.1:8000/mealplans/".concat(meal.id.toString()) + "/subscribe/";
-    axios.get(urlString, { headers: { 'Authorization': data.state.token } }).then((res) => {
-      console.log(res.data)
-      history.replace("/meals");
+  const addToList = async () => {
+    const urlString = "http://192.168.0.244:8000/mealplans/".concat(meal.id.toString()) + "/subscribe/";
+    await axios.get(urlString, { headers: { 'Authorization': data.state.token,
+    'Content-Type': 'application/x-www-form-urlencoded' } }).then((res) => {
+      if (res) {
+        toast("Meal added.");
+        history.goBack();
+      } else {
+        data.state.token = data.state.token;
+        toast("Error while trying to add meal.");
+      }
     });
   }
 

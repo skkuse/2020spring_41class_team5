@@ -34,8 +34,8 @@ const MealInstructions: React.FC<MealPlanItemProps> = ({match}) => {
 
   useEffect( () => {
     setLoading(true);
-    axios.get("http://127.0.0.1:8000/mealplans/".concat(match.params.id) + "/", {
-      headers: { 'Authorization': data.state.token }
+    axios.get("http://192.168.0.244:8000/mealplans/".concat(match.params.id) + "/", {
+      headers: { 'Authorization': data.state.token, 'Content-Type': 'application/x-www-form-urlencoded'}
     })
       .then((res) => {
         setMeal(res.data);
@@ -51,7 +51,7 @@ const MealInstructions: React.FC<MealPlanItemProps> = ({match}) => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/" />
+            <IonBackButton />
           </IonButtons>
           <IonTitle> Cooking Instructions</IonTitle>
         </IonToolbar>

@@ -22,10 +22,11 @@ export async function getToken () : Promise<string> {
 const Querystring = require('querystring');
 
   const api = axios.create({
-    baseURL: `http://127.0.0.1:8000/`,
+    baseURL: `http://192.168.0.244:8000/`,
     headers: {
       post: {
         "authorization": "",
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
     },
   });
@@ -57,7 +58,9 @@ export async function loginUser (email: string, password: string) {
 export const registerUser = async (email: string, password:string) => {
   try {
     var data = { email: email, password: password, is_active: true };
-    const res = await axios.post("http://127.0.0.1:8000/users/register/", Querystring.stringify(data))
+    const res = await axios.post("http://192.168.0.244:8000/users/register/", Querystring.stringify(data),{
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
     console.log(res)
     return true
   }

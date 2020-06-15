@@ -66,6 +66,7 @@ let defaultInfo = {
 const Querystring = require('querystring');
 
 const MyPage :React.FC<RouteComponentProps> = ({ history }) => {
+
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [info, setInfo] = useState<info>();
@@ -91,7 +92,7 @@ const MyPage :React.FC<RouteComponentProps> = ({ history }) => {
     setLoading(true);
     axios({
       method:"GET",
-      url: "http://localhost:8000/users/userinfo"
+      url: "http://192.168.0.244:8000/users/userinfo"
     }).then((res) => {
       setInfo(res.data);
       alert(JSON.stringify(res.data, null, 2))
@@ -211,7 +212,7 @@ const MyPage :React.FC<RouteComponentProps> = ({ history }) => {
               }}
             />
           </IonItem>
-          
+
           <IonItem>
             <IonLabel position="stacked">Weight (kg)</IonLabel>
             <Controller
@@ -405,7 +406,7 @@ const MyPage :React.FC<RouteComponentProps> = ({ history }) => {
               </IonItem>
             </IonList>
           </IonItem>
-          
+
           <IonRow>
             <IonCol>
               <IonButton type="submit">modify</IonButton>

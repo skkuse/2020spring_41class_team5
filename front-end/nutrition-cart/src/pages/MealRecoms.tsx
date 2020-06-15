@@ -39,7 +39,7 @@ const MealRecoms: React.FC = () => {
   // http://localhost:8000/mealplans_diets/
   useEffect(() => {
     setLoading(true);
-    axios.get("http://127.0.0.1:8000/recoms/").then((res) => {
+    axios.get("http://192.168.0.244:8000/recoms/").then((res) => {
       setMeals(res.data);
       setLoading(false);
     });

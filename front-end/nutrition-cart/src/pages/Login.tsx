@@ -53,11 +53,11 @@ const Login: React.FC<RouteComponentProps> = ({ history }) => {
     history.push(path);
   };
 
-  const showSplash = () => {
-    const { SplashScreen } = Plugins;
-    SplashScreen.show();
-    setTimeout(() => SplashScreen.hide(), 2000);
-  };
+  // const showSplash = () => {
+  //   const { SplashScreen } = Plugins;
+  //   SplashScreen.show();
+  //   setTimeout(() => SplashScreen.hide(), 2000);
+  // };
 
   const [loading, setLoading] = useState(false);
   const [isAuth, setAuth] = useState<boolean>(false);

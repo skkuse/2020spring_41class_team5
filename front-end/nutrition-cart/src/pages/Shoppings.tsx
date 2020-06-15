@@ -33,6 +33,7 @@ import { IonReactHashRouter } from "@ionic/react-router";
 import { shoppingItem } from "../models/shoppingItem";
 import ShoppingItem from "../components/ShoppingItem";
 import { RouteComponentProps } from "react-router";
+import Querystring from "querystring";
 
 function doRefresh(event: CustomEvent<RefresherEventDetail>) {
   console.log('Begin async operation');
@@ -42,22 +43,23 @@ function doRefresh(event: CustomEvent<RefresherEventDetail>) {
     event.detail.complete();
   }, 2000);
 }
+
 var x: number
 interface ShoppingListProps {
   shoppinglist: shoppingItem[];
 }
-import Querystring from "querystring";
 
 const ShoppingList: React.FC =() => {
   const [purchaseStatus, setPurchaseStatus] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [shoppingList, setshoppingList] = useState<shoppingItem[]>([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setLoading(true);
     axios({
       method: "GET",
-      url: "http://localhost:8000/shoppings/",
+      url: "http://192.168.0.244:8000/shoppings/",
     }).then((res) => {
       const state = res.data;
       setshoppingList(
@@ -68,6 +70,7 @@ const ShoppingList: React.FC =() => {
       setLoading(false);
     });
   }, [setshoppingList]);
+
   const changestate=()=>{
     const data = shoppingList
     data.map((Item,i) => {
@@ -81,7 +84,7 @@ const ShoppingList: React.FC =() => {
       }
       axios({
         method:"PUT",
-        url: "http://localhost:8000/shoppings/".concat(Item.id.toString())+"/",
+        url: "http://192.168.0.244:8000/shoppings/".concat(Item.id.toString())+"/",
         data: Querystring.stringify(d)
       });
       alert(JSON.stringify(d, null, 2))
@@ -119,8 +122,7 @@ const ShoppingList: React.FC =() => {
             <IonCol className="ion-align-self-center">
               <IonButton
                 size="large"
-                onClick={changestate
-                }
+                onClick={changestate}
                 expand="block"
                 href="/shoppings"
               >

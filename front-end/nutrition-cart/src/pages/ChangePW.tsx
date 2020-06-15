@@ -1,4 +1,4 @@
-  
+
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import  { useForm, Controller } from 'react-hook-form';
@@ -21,7 +21,7 @@ import {
   IonButtons,
   IonBackButton,
   } from '@ionic/react';
-  
+
 export interface auth {
   email: string;
   password: string;
@@ -61,18 +61,6 @@ const ChangePW :React.FC = () => {
     })*/
   }
 
-/*  
-  useEffect(() => {
-    setLoading(true);
-    axios({
-      method:"GET",
-      url: "http://localhost:8000/users/:userId"
-    }).then((res) => {
-      setInfo(res.data);
-      setLoading(false);
-    });
-  }, [setInfo]);
-*/
     return (
       <IonPage>
       <IonHeader>
@@ -105,7 +93,7 @@ const ChangePW :React.FC = () => {
             disabled={true}
           />
         </IonItem>
-        
+
         <IonItem>
           <IonLabel position="stacked" >Password</IonLabel>
           <Controller

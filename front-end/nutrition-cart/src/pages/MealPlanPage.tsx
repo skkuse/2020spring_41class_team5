@@ -32,10 +32,9 @@ import MealRecoms from "../pages/MealRecoms";
 import MealDetails from "../pages/MealDetails";
 import Shoppings from "../pages/Shoppings";
 import Deliveries from "../pages/Deliveries";
-import Settings from "../pages/SettingsPage";
+import Settings from "./SettingsPage";
 import { restaurant, basket, gift, add, codeSlashOutline } from "ionicons/icons";
 import { settings } from "cluster";
-import MealPlanItem from "./MealPlanItem";
 import { Meal } from "../models/meals";
 
 
@@ -47,8 +46,9 @@ import { toast } from "../toast";
 
 import { Plugins } from "@capacitor/core";
 import { AppContext } from "../data/AppContextProvider";
+import MealPlanItem from "../components/MealPlanItem";
 
-const WeekdaySegment: React.FC<RouteComponentProps> = ({ match }) => {
+const MealPlanPage: React.FC<RouteComponentProps> = ({ match }) => {
 
   const daye = new Date(Date.now())
 
@@ -85,8 +85,12 @@ const WeekdaySegment: React.FC<RouteComponentProps> = ({ match }) => {
 
   const loadData = async () => {
     const loadedData =
-      await axios.get("http://192.168.0.244:8000/mealplans/", { headers: { 'Authorization': data.state.token,
-      'Content-Type': 'application/x-www-form-urlencoded' } })
+      await axios.get("http://192.168.0.244:8000/mealplans/", {
+        headers: {
+          'Authorization': data.state.token,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
         .then((res: { data: React.SetStateAction<Meal[]>; }) => {
           setMeals(res.data);
           setLoading(false);
@@ -171,29 +175,5 @@ const WeekdaySegment: React.FC<RouteComponentProps> = ({ match }) => {
   );
 };
 
-export default WeekdaySegment;
+export default MealPlanPage;
 
-    // console.log("Segment selected", e.detail.value)
-    // <IonSegment value={dayText} onIonChange={(e) => setDay(e.detail.value!)}>
-    //       <IonSegmentButton value="Mo">
-    //         <IonLabel>Mo</IonLabel>
-    //       </IonSegmentButton>
-    //       <IonSegmentButton value="Tu">
-    //         <IonLabel>Tu</IonLabel>
-    //       </IonSegmentButton>
-    //       <IonSegmentButton value="Wed">
-    //         <IonLabel>Wed</IonLabel>
-    //       </IonSegmentButton>
-    //       <IonSegmentButton value="Thu">
-    //         <IonLabel>Thu</IonLabel>
-    //       </IonSegmentButton>
-    //       <IonSegmentButton value="Fri">
-    //         <IonLabel>Fri</IonLabel>
-    //       </IonSegmentButton>
-    //       <IonSegmentButton value="Sat">
-    //         <IonLabel>Sat</IonLabel>
-    //       </IonSegmentButton>
-    //       <IonSegmentButton value="Sun">
-    //         <IonLabel>Sun</IonLabel>
-    //       </IonSegmentButton>
-    // </IonSegment>
